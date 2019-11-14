@@ -79,5 +79,5 @@ while True:
 		post_to_mcs(payload)
 		time.sleep(10)
 	else:
-		print('Failed to get reading.Try again!!')
+		print('Failed to get reading!Try again!!')
 		sys.exit(1)
