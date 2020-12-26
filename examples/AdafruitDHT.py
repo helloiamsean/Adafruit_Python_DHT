@@ -24,8 +24,12 @@ import time
 import http.client as http
 import urllib
 import json
+import RPi.GPIO as GPIO
 
 import Adafruit_DHT
+
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(24,GPIO.IN,pull_up_down=GPIO.PUD_DOWN)
 deviceId="Dk21sjaX"
 deviceKey="N2WaRHwerlhmolsk"
 
@@ -72,12 +76,18 @@ h0,t0 = Adafruit_DHT.read_retry(sensor, pin)
 
 while True:
 	h0,t0=Adafruit_DHT.read_retry(sensor,pin)
+	
+	SwitchStatus = GPIO.input(24)
+	
 	if h0 is not None and t0 is not None:
 		print('Temperature={0:0.1f}* Humidity={1:0.1f}%'.format(t0,h0))
+		print(SwitchStatus)
 		payload = {"datapoints":[{"dataChnId":"Humidity","values":{"value":h0}},
-		{"dataChnId":"Temperature","values":{"value":t0}}]}
+		{"dataChnId":"Temperature","values":{"value":t0}},{"dataChnId":"SwitchSatus","values":{"value":SwitchStatus}}]}
 		post_to_mcs(payload)
 		time.sleep(10)
 	else:
 		print('Failed to get reading!Try again!!')
 		sys.exit(1)
+
+
