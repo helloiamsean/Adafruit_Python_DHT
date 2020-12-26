@@ -26,8 +26,8 @@ import urllib
 import json
 
 import Adafruit_DHT
-deviceId="DkKdX2UX"
-deviceKey="4GnqJw0jZTiAZ8AJ"
+deviceId="Dk21sjaX"
+deviceKey="N2WaRHwerlhmolsk"
 
 def post_to_mcs(payload):
 	headers = {"Content-type":"application/json","deviceKey":deviceKey}
@@ -75,7 +75,7 @@ while True:
 	if h0 is not None and t0 is not None:
 		print('Temperature={0:0.1f}* Humidity={1:0.1f}%'.format(t0,h0))
 		payload = {"datapoints":[{"dataChnId":"Humidity","values":{"value":h0}},
-		{"dataChnId":"temp","values":{"value":t0}}]}
+		{"dataChnId":"Temperature","values":{"value":t0}}]}
 		post_to_mcs(payload)
 		time.sleep(10)
 	else:
